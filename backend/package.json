@@ -7,8 +7,7 @@
     "start": "node dist/index.js",
     "test": "NODE_ENV=test mocha --check-leaks -r tsconfig-paths/register -r ts-node/register \"src/test/**/*.test.[tj]s\" --watch",
     "dev": "nodemon",
-    "build": "tsc",
-    "webpack-build": "webpack --mode=production --config webpack.config.js"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
