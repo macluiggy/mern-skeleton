@@ -1,4 +1,6 @@
-const config = {
+import dotenv from "dotenv";
+dotenv.config();
+const con = {
   env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || "sosote",
@@ -12,4 +14,4 @@ const config = {
       "/mernproject",
 };
 
-export default config;
+export default con;
