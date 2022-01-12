@@ -1,6 +1,21 @@
 const path = require("path");
 const webpack = require("webpack");
 
+const rulesForTypeScript = {
+  test: /\.tsx?$/,
+  use: "ts-loader",
+  exclude: /node_modules/,
+};
+const rulesForBabel = {
+  test: /\.m?js$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: "babel-loader",
+    options: {
+      presets: ["@babel/preset-env"],
+    },
+  },
+};
 module.exports = {
   entry: "./src/index.ts",
   target: "node",
@@ -26,13 +41,7 @@ module.exports = {
     },
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [rulesForBabel],
   },
   plugins: [new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })],
   output: {

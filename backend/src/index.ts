@@ -1,7 +1,10 @@
-import app from "./express";
-
-let port = process.env.PORT || 3000;
-app.listen(port, () => {
+import app from "./app";
+import config from "./config/config";
+const { port } = config;
+app.listen(port, (err) => {
+  if (err) {
+    console.log(err);
+  }
   console.log(`Listening on port ${port}`);
 });
 

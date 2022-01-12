@@ -10,6 +10,9 @@ const app = express();
 app.use(express.json());
 //express json with url encoded
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); // read cookies (needed for auth)
+app.use(compress()); // compresses response bodies for all requests
+app.use(helmet()); // helps you secure your Express apps by setting various HTTP headers
 app.use(cors()); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy
 
 //routes
