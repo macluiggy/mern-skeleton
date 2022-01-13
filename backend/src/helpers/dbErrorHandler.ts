@@ -44,3 +44,9 @@ let str2 = str.substring(str.lastIndexOf(".$") + 2, str.lastIndexOf("_1"));
 console.log(str2); // mi llave como esta _1 todo bien
 
 console.log(str.charAt(0));
+
+const arr = [1, 2, 3];
+const sumNums = (num, arr: number[]) => {
+  return arr.reduce((acc, curr) => acc + curr, num);
+};
+console.log(sumNums(1, arr));
