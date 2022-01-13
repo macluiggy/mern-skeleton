@@ -21,13 +21,22 @@ const UserSchema = new Schema({
 
 UserSchema.virtual("password")
   .set(function (password) {
-    this._password = password; // store the password in a virtual field
-    this.salt = this.makeSalt(); // generate a salt, this is a random string
-    this.hashed_password = this.encryptPassword(password); // encrypt the password
+    this._password = password;
+    this.salt = this.makeSalt();
+    this.hashed_password = this.encryptPassword(password);
   })
   .get(function () {
     return this._password;
   });
+
+UserSchema.path("hashed_password").validate(function (v) {
+  if (this._password && this._password.length < 6) {
+    this.invalidate("password", "Password must be at least 6 characters.");
+  }
+  if (this.isNew && !this._password) {
+    this.invalidate("password", "Password is required");
+  }
+}, null);
 
 UserSchema.methods = {
   authenticate: function (plainText) {
@@ -37,9 +46,9 @@ UserSchema.methods = {
     if (!password) return "";
     try {
       return crypto
-        .createHmac("sha1", this.salt)
-        .update(password)
-        .digest("hex");
+        .createHmac("sha1", this.salt) // create a hash using the salt
+        .update(password) // update the hash with the password
+        .digest("hex"); // the disgest is a method that converts the hash to a hexadecimal string
     } catch (err) {
       return "";
     }
