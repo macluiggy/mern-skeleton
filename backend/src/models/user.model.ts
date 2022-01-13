@@ -20,23 +20,23 @@ const UserSchema = new Schema({
 });
 
 UserSchema.virtual("password")
-  .set(function (password) {
+  .set(function (this, password) {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashed_password = this.encryptPassword(password);
   })
-  .get(function () {
+  .get(function (this) {
     return this._password;
   });
 
-UserSchema.path("hashed_password").validate(function (v) {
+UserSchema.path("hashed_password").validate(function (this, v) {
   if (this._password && this._password.length < 6) {
     this.invalidate("password", "Password must be at least 6 characters.");
   }
   if (this.isNew && !this._password) {
     this.invalidate("password", "Password is required");
   }
-}, null);
+}, undefined);
 
 UserSchema.methods = {
   authenticate: function (plainText) {
