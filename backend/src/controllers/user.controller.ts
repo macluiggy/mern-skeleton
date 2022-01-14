@@ -3,7 +3,7 @@ import extend from "lodash/extend";
 import dbErrorHandler from "../helpers/dbErrorHandler";
 import { RequestHandler, Response, Request, NextFunction } from "express";
 import { RequestWithProfile } from "../types";
-import { log } from "console";
+
 const create: RequestHandler = async (req, res, next) => {
   const { body } = req;
   const user = new User(body);
@@ -16,6 +16,7 @@ const create: RequestHandler = async (req, res, next) => {
     });
   }
 };
+
 const list: RequestHandler = async (req, res) => {
   try {
     const users = await User.find().select("name email updated created");
@@ -53,6 +54,7 @@ const userById = async (
     });
   }
 };
+
 const read = (req: RequestWithProfile, res: Response) => {
   const { profile } = req; // destructuring the profile from the request object
   if (!profile) return res.json({ error: "User not found" }); // if the profile is not found
@@ -60,6 +62,7 @@ const read = (req: RequestWithProfile, res: Response) => {
   profile.salt = undefined; // remove the salt from the response
   return res.json(req.profile); // return the profile
 };
+
 const update = async (
   req: RequestWithProfile,
   res: Response,
@@ -82,6 +85,7 @@ const update = async (
     });
   }
 };
+
 const remove = async (
   req: RequestWithProfile,
   res: Response,

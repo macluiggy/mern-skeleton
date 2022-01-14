@@ -50,3 +50,6 @@ export default { getErrorMessage };
 //   return arr.reduce((acc, curr) => acc + curr, num);
 // };
 // console.log(sumNums(1, arr));
+// import { log } from "console";
+
+// log("hello");
