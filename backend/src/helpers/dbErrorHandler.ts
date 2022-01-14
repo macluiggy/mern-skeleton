@@ -12,7 +12,7 @@ const getUniqueErrorMessage = (err) => {
   } catch (ex) {
     output = "Unique filed already exists";
   }
-  return output;
+  return `getErrorMessage: ${output}`;
 };
 
 const getErrorMessage = (err: any) => {
