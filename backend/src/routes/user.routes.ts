@@ -1,3 +1,7 @@
+import {
+  requireSignin,
+  hasAuthorization,
+} from "../controllers/auth.controller";
 import { Router, Request } from "express";
 import {
   create,
@@ -12,7 +16,11 @@ const router = Router();
 
 router.route("/api/users").get(list).post(create);
 
-router.route("/api/users/:userId").get(read).put(update).delete(remove);
+router
+  .route("/api/users/:userId")
+  .get(requireSignin, read)
+  .put(requireSignin, hasAuthorization, update)
+  .delete(requireSignin, hasAuthorization, remove);
 
 router.param("userId", userById);
 
