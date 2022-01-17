@@ -38,7 +38,7 @@ const signout: RequestHandler = async (req, res) => {
 const requireSignin = expressJwt({
   algorithms: ["HS256"], // to prevent possible downgrade attacks when using third party libraries as secret
   secret: jwtSecret, // verifis tha t the incoming request has a valid token in the authorization header
-  userProperty: "auth", // if the token is valid, the user will be added to the request object with the user property auth adding the _id as the value, it is the id, because it was the value which it was used to sign the token
+  userProperty: "auth", // if the token is valid, the user will be added to the request object with the user property "auth" adding the _id as the value, it is the id, because it was the value which it was used to sign the token
 });
 
 const hasAuthorization = (

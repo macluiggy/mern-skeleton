@@ -8,8 +8,12 @@ const create: RequestHandler = async (req, res, next) => {
   const { body } = req;
   const user = new User(body);
   try {
-    await user.save();
-    return res.status(200).json({ message: "Successfully signed up!" });
+    const newUser = await user.save();
+    newUser.hashed_password = undefined;
+    newUser.salt = undefined;
+    return res
+      .status(200)
+      .json({ message: "Successfully signed up!", newUser });
   } catch (error) {
     return res.status(400).json({
       error: dbErrorHandler.getErrorMessage(error),
@@ -17,7 +21,7 @@ const create: RequestHandler = async (req, res, next) => {
   }
 };
 
-const list: RequestHandler = async (req, res) => {
+const list: RequestHandler = async (_, res) => {
   try {
     const users = await User.find().select("name email updated created"); // find all users, and only select the name, email, updated and created fields, this filter also will be applied when retrieving a single user by id
     return res.json(users);
@@ -60,7 +64,7 @@ const read = (req: RequestWithProfile, res: Response) => {
   if (!profile) return res.json({ error: "User not found" }); // if the profile is not found
   profile.hashed_password = undefined; // remove the hashed password from the response
   profile.salt = undefined; // remove the salt from the response
-  return res.json(req.profile); // return the profile
+  return res.json(profile); // return the profile
 };
 
 const update = async (req: RequestWithProfile, res: Response) => {
@@ -71,10 +75,10 @@ const update = async (req: RequestWithProfile, res: Response) => {
     extend(user, body); // extend the user with the new values, if a value in body already exists, it will be overwritten in the user object
     if (!user) return res.status(400).json({ error: "User not found" });
     user.updated = Date.now();
-    await user.save();
-    user.hashed_password = undefined;
-    user.salt = undefined;
-    return res.json(user);
+    const updatedUser = await user.save();
+    updatedUser.hashed_password = undefined;
+    updatedUser.salt = undefined;
+    return res.json(updatedUser);
   } catch (error) {
     return res.status(400).json({
       error: dbErrorHandler.getErrorMessage(error),
@@ -89,7 +93,7 @@ const remove = async (req: RequestWithProfile, res: Response) => {
     let deletedUser = await user.remove();
     deletedUser.hashed_password = undefined;
     deletedUser.salt = undefined;
-    return res.json(deletedUser);
+    return res.json({ message: "User deleted successfully", deletedUser });
   } catch (error) {
     return res.status(400).json({
       error: dbErrorHandler.getErrorMessage(error),
