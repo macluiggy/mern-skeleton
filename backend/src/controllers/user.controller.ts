@@ -19,7 +19,7 @@ const create: RequestHandler = async (req, res, next) => {
 
 const list: RequestHandler = async (req, res) => {
   try {
-    const users = await User.find().select("name email updated created");
+    const users = await User.find().select("name email updated created"); // find all users, and only select the name, email, updated and created fields, this filter also will be applied when retrieving a single user by id
     return res.json(users);
   } catch (error) {
     return res.status(400).json({
@@ -63,11 +63,7 @@ const read = (req: RequestWithProfile, res: Response) => {
   return res.json(req.profile); // return the profile
 };
 
-const update = async (
-  req: RequestWithProfile,
-  res: Response,
-  next: NextFunction
-) => {
+const update = async (req: RequestWithProfile, res: Response) => {
   try {
     const user = req.profile; // get the user from the request object
     const { body } = req; // get the body from the request object
@@ -86,11 +82,7 @@ const update = async (
   }
 };
 
-const remove = async (
-  req: RequestWithProfile,
-  res: Response,
-  next: NextFunction
-) => {
+const remove = async (req: RequestWithProfile, res: Response) => {
   try {
     let user = req.profile;
     if (!user) return res.status(400).json({ error: "User not found" });

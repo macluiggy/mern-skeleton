@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import indexRoute from "./routes/index.route";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
@@ -33,7 +33,16 @@ app.get("/", (req, res) => {
 app.use("/", indexRoute);
 app.use("/", userRoutes);
 app.use("/", authRoutes);
-
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err.name === "UnauthorizedError")
+    // this is the error name when express-jwt fails to authenticate a token
+    return res.status(401).json({ error: err.name + ": " + err.message });
+  else if (err) {
+    // if the error is not an unauthorized error, we send the error
+    console.log(err);
+    return res.status(400).json({ error: err.name + ": " + err.message });
+  }
+});
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
 // });

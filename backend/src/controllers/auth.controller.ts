@@ -1,7 +1,8 @@
 import User from "../models/user.model";
-import { CookieOptions, RequestHandler } from "express";
+import { NextFunction, RequestHandler, Response } from "express";
 import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
+import { RequestWithProfile, RequestWithAuth } from "../types";
 import config from "../config/config";
 const { jwtSecret } = config;
 
@@ -34,8 +35,22 @@ const signout: RequestHandler = async (req, res) => {
   return res.status(200).json({ message: "signed out" });
 };
 
-const requireSignin = "";
+const requireSignin = expressJwt({
+  algorithms: ["HS256"], // to prevent possible downgrade attacks when using third party libraries as secret
+  secret: jwtSecret, // verifis tha t the incoming request has a valid token in the authorization header
+  userProperty: "auth", // if the token is valid, the user will be added to the request object with the user property auth adding the _id as the value, it is the id, because it was the value which it was used to sign the token
+});
 
-const hasAuthorization = (req, res) => {};
+const hasAuthorization = (
+  req: RequestWithAuth & RequestWithProfile,
+  res: Response,
+  next: NextFunction
+) => {
+  // req.auth was created by the requireSignin middleware after authenticating the user with the secret, the req.profile was created by the userById middleware in user.controller.ts, with this two, we first verify that the profile and the auth exits, if they do, we check that the profile._id is the same as the auth._id, if they are the same, we allow the user to continue, if they are not the same, we return an error
+  const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
+  if (!authorized)
+    return res.status(403).json({ error: "User is not authorized" });
+  next();
+};
 
 export { signin, signout, requireSignin, hasAuthorization };
