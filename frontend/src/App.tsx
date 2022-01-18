@@ -1,13 +1,19 @@
 import React from "react";
 import Index from "./components/index";
-
+import MainRouter from "./MainRouter";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/core";
+import theme from "./theme";
+import { hot } from "react-hot-loader";
 const App = () => {
   return (
-    <div>
-      This is the App component
-      <Index />
-    </div>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        {" "}
+        <MainRouter />{" "}
+      </ThemeProvider>
+    </BrowserRouter>
   );
 };
 
-export default App;
+export default hot(module)(App);
