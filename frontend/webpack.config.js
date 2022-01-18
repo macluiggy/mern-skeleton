@@ -25,11 +25,20 @@ const rulesForSass = {
     "sass-loader",
   ],
 };
+const rulesForImages = {
+  test: /\.(png|svg|jpg|jpeg|gif)$/i,
+  type: "asset/resource",
+};
 
 module.exports = {
   entry: path.resolve(CURRENT_WORKING_DIR, "src/index.tsx"),
   module: {
-    rules: [rulesForJavaScript, rulesForTypescript, rulesForSass],
+    rules: [
+      rulesForJavaScript,
+      rulesForTypescript,
+      rulesForSass,
+      rulesForImages,
+    ],
   },
   output: {
     filename: "bundle.js",
