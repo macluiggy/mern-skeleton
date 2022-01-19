@@ -27,7 +27,7 @@ const list = async (signal) => {
 
 const read = async (params, credentials, signal) => {
   try {
-    let response = await fetch(`${path}/api/users/${params.id}`, {
+    let response = await fetch(`${path}/api/users/${params.userId}`, {
       method: "GET",
       signal: signal, // cancel request if signal is canceled
       headers: {
@@ -42,3 +42,40 @@ const read = async (params, credentials, signal) => {
     console.log(error);
   }
 };
+
+const update = async (params, credentials, user) => {
+  try {
+    let response = await fetch(`${path}/api/users/${params.userId}`, {
+      method: "PUT",
+      body: JSON.stringify(user),
+      headers: {
+        Accept: "application/json",
+        ContentType: "application/json",
+        Authorization: `Bearer ${credentials.t}`,
+        // sosoterocafuertemacluiggy: "sosoterocafuertemacluiggy",
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const remove = async (params, credentials): Promise<Response | void> => {
+  try {
+    const response = await fetch(`${path}/api/users/${params.userId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        ContentType: "application/json",
+        Authorization: `Bearer ${credentials.t}`,
+        // sosoterocafuertemacluiggy: "sosoterocafuertemacluiggy",
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    return console.log(error);
+  }
+};
+
+export { create, list, read, update, remove };
