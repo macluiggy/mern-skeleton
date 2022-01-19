@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import { CardContent, Card, CardMedia, Typography } from "@material-ui/core";
-// import unicornbikeImg from "./../assets/images/unicornbike.jpg";
-const unicornbikeImg = require("./../assets/images/unicornbike.jpg");
+import unicornbikeImg from "./../assets/images/unicornbike.jpg";
+// const unicornbikeImg = require("./../assets/images/unicornbike.jpg");
 const useStyles = makeStyles((theme) => ({
   card: {
     maxWidth: 600,

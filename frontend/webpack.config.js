@@ -25,11 +25,14 @@ const rulesForSass = {
     "sass-loader",
   ],
 };
-const rulesForImages = {
+const rulesForAssets = {
   test: /\.(png|svg|jpg|jpeg|gif)$/i,
   type: "asset/resource",
 };
-
+const rulesForImages = {
+  test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+  use: "file-loader",
+};
 module.exports = {
   entry: path.resolve(CURRENT_WORKING_DIR, "src/index.tsx"),
   module: {
