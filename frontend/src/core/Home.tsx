@@ -21,5 +21,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-  return <div>Hello Home</div>;
+  const { media, card, title } = useStyles();
+  return (
+    <Card className={card}>
+      <Typography variant="h6" className={title}>
+        Home Page
+      </Typography>
+      <CardMedia
+        className={media}
+        image={unicornbikeImg}
+        title="Unicorn Bicycle"
+      />
+      <CardContent>
+        <Typography>Welcome to the MERN Skeleton home page.</Typography>
+      </CardContent>
+    </Card>
+  );
 }
