@@ -41,7 +41,7 @@ module.exports = {
     },
   },
   module: {
-    rules: [rulesForBabel],
+    rules: [rulesForBabel, rulesForTypeScript],
   },
   plugins: [new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })],
   output: {
