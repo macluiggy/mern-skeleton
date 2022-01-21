@@ -4,12 +4,12 @@ const signin = async (user) => {
   try {
     const response = await fetch(`${path}/auth/signin`, {
       method: "POST",
-      body: JSON.stringify(user),
       headers: {
-        "Content-Type": "application/json",
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
       credentials: "include",
+      body: JSON.stringify(user),
     });
     return await response.json();
   } catch (error) {
