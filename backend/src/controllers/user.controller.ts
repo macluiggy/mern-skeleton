@@ -15,6 +15,7 @@ const create: RequestHandler = async (req, res, next) => {
       .status(200)
       .json({ message: "Successfully signed up!", newUser });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({
       error: dbErrorHandler.getErrorMessage(error),
     });

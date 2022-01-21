@@ -8,7 +8,13 @@ import {
   CardActions,
   Button,
   Icon,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 interface IUser {
@@ -127,6 +133,21 @@ export default function Signup() {
           </Button>
         </CardActions>
       </Card>
+      <Dialog open={values.open} disableBackdropClick={true}>
+        <DialogTitle>New Account</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            New account successfully created.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Link to="/signin">
+            <Button color="primary" autoFocus variant="contained">
+              Sign In
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
