@@ -45,7 +45,7 @@ export default function Profile({ match }) {
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    console.log(jwt);
+    // console.log(jwt);
 
     read({ userId: match.params.userId }, { t: jwt.token }, signal).then(
       (data) => {
@@ -86,6 +86,7 @@ export default function Profile({ match }) {
                   <Edit />
                 </IconButton>
               </Link>
+              {/* <DeleteUser userId={user._id} /> */}
             </ListItemSecondaryAction>
           )}
         </ListItem>

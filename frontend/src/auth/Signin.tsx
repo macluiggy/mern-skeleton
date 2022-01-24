@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { iUserSignIn } from "./types";
 
 const useStyles = makeStyles(({ spacing, palette }) => ({
   card: {
@@ -60,8 +61,8 @@ export default function Signin(props) {
       password: values.password || undefined,
     };
 
-    signin(user).then((data) => {
-      // console.log(data);
+    signin(user).then((data: iUserSignIn) => {
+      // console.log(data, "from signin");
 
       if (data.error) {
         setValues({ ...values, error: data.error });

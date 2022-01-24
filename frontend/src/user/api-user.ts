@@ -5,7 +5,7 @@ const create = async (user) => {
     let response = await fetch(`${path}/api/users`, {
       method: "POST",
       body: JSON.stringify(user),
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
     });
     return await response.json();
   } catch (error) {
@@ -40,7 +40,7 @@ const read = async (params, credentials, signal) => {
       },
     });
     let data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     return data;
   } catch (error) {

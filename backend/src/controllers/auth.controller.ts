@@ -19,9 +19,11 @@ const signin: RequestHandler = async (req, res) => {
     const token = jwt.sign({ _id }, jwtSecret); // create a token with the user id and the secret
 
     res.cookie("t", token, { expires: new Date(Date.now() + 9999) }); // set a cookie with the token for the user to use it in the client side
+    user.hashed_password = undefined; // remove the password from the user object
+    user.salt = undefined; // remove the salt from the user object
     return res.json({
       token,
-      user: { _id, name, email },
+      user,
     });
   } catch (error) {
     console.log(error);
