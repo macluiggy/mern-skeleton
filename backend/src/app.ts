@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import compress from "compression";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
 const app = express();
 const { mongoUri } = config;
 // database connection
@@ -18,10 +19,16 @@ mongoose.connection.on("error", () => {
   throw new Error(`unable to connect to database: ${mongoUri}`);
 });
 // middlewares
-app.use(cors({ credentials: true, origin: "http://localhost:8080" || true })); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy, passing credentials: true, es para que el cliente pueda enviar datos al servidor cuando el modo de credenciales de la solicitud es 'include'
-app.use(express.json());
+// app.use(express.json());
 //express json with url encoded
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: false }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(cors({ credentials: true, origin: "http://localhost:8080" || true })); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy, passing credentials: true, es para que el cliente pueda enviar datos al servidor cuando el modo de credenciales de la solicitud es 'include'
+
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(compress()); // compresses response bodies for all requests
 app.use(helmet()); // helps you secure your Express apps by setting various HTTP headers

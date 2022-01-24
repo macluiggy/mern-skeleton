@@ -2,7 +2,7 @@ import {
   requireSignin,
   hasAuthorization,
 } from "../controllers/auth.controller";
-import { Router, Request } from "express";
+import { Router } from "express";
 import {
   create,
   list,
@@ -19,9 +19,16 @@ router.route("/api/users").get(list).post(create);
 router
   .route("/api/users/:userId")
   .get(requireSignin, read)
-  .put(requireSignin, hasAuthorization, update)
+  .put((req, res) => {
+    res.json(req.body);
+  })
   .delete(requireSignin, hasAuthorization, remove);
 
+router.route("/api/").post((req, res) => {
+  console.log("djdjjd");
+
+  res.json(req.body);
+});
 router.param("userId", userById);
 
 export default router;

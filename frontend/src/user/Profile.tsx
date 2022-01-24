@@ -36,7 +36,7 @@ export default function Profile({ match }) {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    created: "",
+    created: undefined,
     _id: "",
   });
   const [redirectToSignin, setRedirectToSignin] = useState(false);

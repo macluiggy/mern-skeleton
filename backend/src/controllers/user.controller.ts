@@ -41,7 +41,7 @@ const userById = async (
 ) => {
   try {
     const user = await User.findById(id); // find the user by id
-    console.log(user);
+    // console.log(user, "this is from userById");
 
     if (!user) {
       // if the user is not found
@@ -70,10 +70,14 @@ const read = (req: RequestWithProfile, res: Response) => {
 
 const update = async (req: RequestWithProfile, res: Response) => {
   try {
-    const user = req.profile; // get the user from the request object
+    let user = req.profile; // get the user from the request object
     const { body } = req; // get the body from the request object
     // update the user with the new values
     extend(user, body); // extend the user with the new values, if a value in body already exists, it will be overwritten in the user object
+    console.log(req.body);
+    // user = Object.assign(user, body); // assign the new values to the user object
+    // console.log(user);
+
     if (!user) return res.status(400).json({ error: "User not found" });
     user.updated = Date.now();
     const updatedUser = await user.save();

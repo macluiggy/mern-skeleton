@@ -1,5 +1,5 @@
 import { path } from "../config";
-
+import { TRead } from "./types";
 const create = async (user) => {
   try {
     let response = await fetch(`${path}/api/users`, {
@@ -25,7 +25,7 @@ const list = async (signal) => {
   }
 };
 
-const read = async (params, credentials, signal) => {
+const read: TRead = async (params, credentials, signal) => {
   try {
     // console.log(credentials.t);
 
