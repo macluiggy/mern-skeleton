@@ -27,6 +27,8 @@ const list = async (signal) => {
 
 const read = async (params, credentials, signal) => {
   try {
+    // console.log(credentials.t);
+
     let response = await fetch(`${path}/api/users/${params.userId}`, {
       method: "GET",
       signal: signal, // cancel request if signal is canceled
@@ -37,7 +39,10 @@ const read = async (params, credentials, signal) => {
         // sosoterocafuertemacluiggy: "sosoterocafuertemacluiggy",
       },
     });
-    return await response.json();
+    let data = await response.json();
+    console.log(data);
+
+    return data;
   } catch (error) {
     console.log(error);
   }

@@ -14,7 +14,7 @@ export default function MainRouter() {
         <Route path="/users" component={Users} />
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/user/:userId" component={Profile} />
       </Switch>
     </div>
   );

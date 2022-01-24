@@ -31,33 +31,71 @@ const useStyles = makeStyles(({ mixins: { gutters }, spacing, palette }) => ({
   },
 }));
 
-export default function Profile({
-  match: {
-    params: { userId },
-  },
-}) {
+export default function Profile({ match }) {
   const { root, title } = useStyles();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    created: "",
+    _id: "",
+  });
   const [redirectToSignin, setRedirectToSignin] = useState(false);
   const jwt = isAuthenticated();
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
-    read({ userId }, { t: jwt.token }, signal).then((data) => {
-      if (data && data.error) {
-        setRedirectToSignin(true);
-      } else {
-        setUser(data);
+    console.log(jwt);
+
+    read({ userId: match.params.userId }, { t: jwt.token }, signal).then(
+      (data) => {
+        // console.log(data);
+
+        if (data && data.error) {
+          setRedirectToSignin(true);
+        } else {
+          setUser(data);
+        }
       }
-    });
+    );
 
     return () => {
       abortController.abort();
     };
-  }, [userId]);
+  }, [match.params.userId]);
 
   if (redirectToSignin) return <Redirect to="/signin" />;
 
-  return <Paper className={root}></Paper>;
+  return (
+    <Paper className={root}>
+      <Typography variant="h6" className={title}>
+        Profile
+      </Typography>
+      <List dense>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <Person />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={user.name} secondary={user.email} />{" "}
+          {isAuthenticated().user && isAuthenticated().user._id == user._id && (
+            <ListItemSecondaryAction>
+              <Link to={`/user/edit/${user._id}`}>
+                <IconButton aria-label="Edit" color="primary">
+                  <Edit />
+                </IconButton>
+              </Link>
+            </ListItemSecondaryAction>
+          )}
+        </ListItem>
+        <Divider />
+        <ListItem>
+          <ListItemText
+            primary={`Joined: ${new Date(user.created).toDateString()}`}
+          />
+        </ListItem>
+      </List>
+    </Paper>
+  );
 }

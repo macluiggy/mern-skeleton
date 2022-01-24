@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { signin } from "./api-auth";
+import auth from "./auth-helper";
 import { Redirect } from "react-router-dom";
 import {
   Card,
@@ -60,10 +61,14 @@ export default function Signin(props) {
     };
 
     signin(user).then((data) => {
+      // console.log(data);
+
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, error: "", redirectToReferrer: true });
+        auth.authenticate(data, () => {
+          setValues({ ...values, error: "", redirectToReferrer: true });
+        });
       }
     });
   };
