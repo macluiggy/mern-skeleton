@@ -19,13 +19,11 @@ router.route("/api/users").get(list).post(create);
 router
   .route("/api/users/:userId")
   .get(requireSignin, read)
-  .put((req, res) => {
-    res.json(req.body);
-  })
+  .put(requireSignin, hasAuthorization, update)
   .delete(requireSignin, hasAuthorization, remove);
 
-router.route("/api/").post((req, res) => {
-  console.log("djdjjd");
+router.route("/api/").put((req, res) => {
+  console.log(req.body);
 
   res.json(req.body);
 });

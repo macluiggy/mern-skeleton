@@ -74,14 +74,15 @@ const update = async (req: RequestWithProfile, res: Response) => {
     const { body } = req; // get the body from the request object
     // update the user with the new values
     extend(user, body); // extend the user with the new values, if a value in body already exists, it will be overwritten in the user object
-    console.log(req.body);
+    // console.log(req.body);
     // user = Object.assign(user, body); // assign the new values to the user object
     // console.log(user);
 
     if (!user) return res.status(400).json({ error: "User not found" });
     user.updated = Date.now();
-    const updatedUser = await user.save();
+    const updatedUser = await user.save(); // this will only save the properties that are in the mongooose schema, so if you add a property c to a schema {a,b}
     updatedUser.hashed_password = undefined;
+    // console.log(updatedUser);
     updatedUser.salt = undefined;
     return res.json(updatedUser);
   } catch (error) {

@@ -36,7 +36,7 @@ export default function Profile({ match }) {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    created: undefined,
+    created: "",
     _id: "",
   });
   const [redirectToSignin, setRedirectToSignin] = useState(false);
@@ -93,7 +93,7 @@ export default function Profile({ match }) {
         <Divider />
         <ListItem>
           <ListItemText
-            primary={`Joined: ${new Date(user.created).toDateString()}`}
+            primary={`Joined: ${new Date(user.created || "").toDateString()}`}
           />
         </ListItem>
       </List>

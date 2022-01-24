@@ -28,10 +28,18 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     marginBottom: spacing(2),
   },
 }));
-
+type TValues = {
+  name: string;
+  password: string;
+  email: string;
+  open: boolean;
+  error: string;
+  redirectToProfile: boolean;
+  userId?: string;
+};
 export default function EditProfile({ match }) {
   const { card, title, textField, submit, error } = useStyles();
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<TValues>({
     name: "",
     password: "",
     email: "",
@@ -66,7 +74,20 @@ export default function EditProfile({ match }) {
       email: values.email || undefined,
       password: values.password || undefined,
     };
-    // update();
+    update({ userId: match.params.userId }, { t: jwt.token }, user).then(
+      (data) => {
+        const { error, _id: userId } = data;
+        if (data && error) {
+          setValues({ ...values, error });
+        } else {
+          setValues({
+            ...values,
+            redirectToProfile: true,
+            userId,
+          });
+        }
+      }
+    );
   };
 
   return <div></div>;

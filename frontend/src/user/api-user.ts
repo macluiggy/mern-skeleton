@@ -1,5 +1,5 @@
 import { path } from "../config";
-import { TRead } from "./types";
+import { TRead, TUpdate } from "./types";
 const create = async (user) => {
   try {
     let response = await fetch(`${path}/api/users`, {
@@ -48,7 +48,7 @@ const read: TRead = async (params, credentials, signal) => {
   }
 };
 
-const update = async (params, credentials, user) => {
+const update: TUpdate = async (params, credentials, user) => {
   try {
     let response = await fetch(`${path}/api/users/${params.userId}`, {
       method: "PUT",

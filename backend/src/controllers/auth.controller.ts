@@ -56,7 +56,7 @@ const hasAuthorization = (
   // req.auth was created by the requireSignin middleware after authenticating the user with the secret, the req.profile was created by the userById middleware in user.controller.ts, with this two, we first verify that the profile and the auth exits, if they do, we check that the profile._id is the same as the auth._id, if they are the same, we allow the user to continue, if they are not the same, we return an error
   console.log(req.auth, "auth");
   const authorized =
-    req.profile && req.auth; /** && req.profile._id == req.auth._id; */
+    req.profile && req.auth; /**&& req.profile._id == req.auth._id */
   if (!authorized)
     return res.status(403).json({ error: "User is not authorized" });
   next();

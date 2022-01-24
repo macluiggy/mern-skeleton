@@ -19,14 +19,16 @@ mongoose.connection.on("error", () => {
   throw new Error(`unable to connect to database: ${mongoUri}`);
 });
 // middlewares
-// app.use(express.json());
+app.use(express.json());
 //express json with url encoded
-// app.use(express.urlencoded({ extended: false }));
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(express.urlencoded({ extended: false }));
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//   })
+// );
+// app.use(bodyParser.json());
+
 app.use(cors({ credentials: true, origin: "http://localhost:8080" || true })); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy, passing credentials: true, es para que el cliente pueda enviar datos al servidor cuando el modo de credenciales de la solicitud es 'include'
 
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -50,6 +52,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(400).json({ error: err.name + ": " + err.message });
   }
 });
+// app.route("/api/").post((req, res) => {
+//   console.log("djdjjd");
+
+//   res.json(req.body);
+// });
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
 // });

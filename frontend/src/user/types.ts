@@ -6,18 +6,23 @@ export type TRead = (
   _id: string;
   name: string;
   email: string;
-  created: Date | undefined;
+  created: string;
   error?: any;
 }>;
 
 export type TUpdate = (
   params: { userId: string },
   credentials: { t: string },
-  user: AbortSignal
+  user: {
+    name: string;
+    email: string;
+    password: string;
+  }
 ) => Promise<{
   _id: string;
   name: string;
   email: string;
   created: Date | undefined;
+  updated: Date | undefined;
   error?: any;
 }>;
