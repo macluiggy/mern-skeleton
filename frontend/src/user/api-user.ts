@@ -29,6 +29,7 @@ const list = async (signal) => {
 };
 
 const read: TRead = async (params, credentials, signal) => {
+  // console.log(path);
   try {
     // console.log(credentials.t);
 
