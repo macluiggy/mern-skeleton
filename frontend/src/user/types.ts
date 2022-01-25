@@ -29,6 +29,19 @@ export type TUpdate = (
   error?: any;
 }>;
 
+export type TRemove = (
+  params: { userId: string },
+  credentials: { t: string }
+) => Promise<{
+  message: string;
+  deletedUser: {
+    _id: string;
+    name: string;
+    email: string;
+    created: string;
+  };
+  error?: any;
+}>;
 export type THandleChange = (
   name: string
 ) => (event: ChangeEvent<HTMLTextAreaElement>) => void;

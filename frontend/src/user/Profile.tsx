@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { Edit, Person } from "@material-ui/icons";
 import { Redirect, Link } from "react-router-dom";
+import DeleteUser from "./DeleteUser";
 const { isAuthenticated } = auth;
 
 const useStyles = makeStyles(({ mixins: { gutters }, spacing, palette }) => ({
@@ -86,7 +87,7 @@ export default function Profile({ match }) {
                   <Edit />
                 </IconButton>
               </Link>
-              {/* <DeleteUser userId={user._id} /> */}
+              <DeleteUser userId={user._id} />
             </ListItemSecondaryAction>
           )}
         </ListItem>

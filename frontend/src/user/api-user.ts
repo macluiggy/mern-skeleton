@@ -1,5 +1,5 @@
 import { path } from "../config";
-import { TRead, TUpdate } from "./types";
+import { TRead, TRemove, TUpdate } from "./types";
 const create = async (user) => {
   try {
     let response = await fetch(`${path}/api/users`, {
@@ -68,7 +68,7 @@ const update: TUpdate = async (params, credentials, user) => {
   }
 };
 
-const remove = async (params, credentials): Promise<Response | void> => {
+const remove: TRemove = async (params, credentials) => {
   try {
     const response = await fetch(`${path}/api/users/${params.userId}`, {
       method: "DELETE",
