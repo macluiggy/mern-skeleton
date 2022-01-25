@@ -35,7 +35,7 @@ export default function Home() {
       />
       <CardContent>
         <Typography>Welcome to the MERN Skeleton home page.</Typography>
-        <Link to="/users">Users</Link>
+        {/* <Link to="/users">Users</Link> */}
       </CardContent>
     </Card>
   );

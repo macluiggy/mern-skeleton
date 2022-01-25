@@ -2,6 +2,15 @@ import { signout } from "./api-auth";
 import { iUserSignIn } from "./types";
 const auth = {
   authenticate(jwt: iUserSignIn, cb) {
+    // console.log(jwt);
+    /**token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDMxMjE4MTZ9.M2zL2MnGqOvFS6lPbQ3QxeHengi5YU-8d8GrCvWXXiM"
+user:
+created: "2022-01-17T16:52:51.535Z"
+email: "luiggy@gmail.com"
+name: "luiggy"
+updated: "2022-01-25T02:13:08.989Z"
+__v: 0
+_id: "61e59ee3e46097a260807fc5" */
     if (typeof window !== undefined)
       sessionStorage.setItem("jwt", JSON.stringify(jwt)); // if we are in the browser, store the jwt in sessionStorage
     cb(); // call the callback that define actions to be executed after authentication
@@ -13,7 +22,7 @@ const auth = {
     if (typeof window == "undefined") return false;
     if (jwt) {
       let parsedJwt = JSON.parse(jwt);
-      // console.log(parsedJwt, "este es el token");
+      console.log(parsedJwt, "este es el token");
       return parsedJwt;
     }
     // parse method is the opposite of stringify

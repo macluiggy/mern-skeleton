@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 
 export type TRead = (
   params: { userId: string },
-  credentials: { t: string },
+  credentials: { t: string | boolean },
   signal: AbortSignal
 ) => Promise<{
   _id: string;

@@ -7,10 +7,12 @@ import Signin from "./auth/Signin";
 import Profile from "./user/Profile";
 import EditProfile from "./user/EditProfile";
 import PrivateRoute from "./auth/PrivateRoute";
+import { Menu } from "./core/Menu";
 
 export default function MainRouter() {
   return (
     <div>
+      <Menu />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/users" component={Users} />

@@ -47,18 +47,16 @@ export default function Profile({ match }) {
     const abortController = new AbortController();
     const signal = abortController.signal;
     // console.log(jwt);
+    const t = typeof jwt === "boolean" ? jwt : jwt.token;
+    read({ userId: match.params.userId }, { t }, signal).then((data) => {
+      // console.log(data);
 
-    read({ userId: match.params.userId }, { t: jwt.token }, signal).then(
-      (data) => {
-        // console.log(data);
-
-        if (data && data.error) {
-          setRedirectToSignin(true);
-        } else {
-          setUser(data);
-        }
+      if (data && data.error) {
+        setRedirectToSignin(true);
+      } else {
+        setUser(data);
       }
-    );
+    });
 
     return () => {
       abortController.abort();
