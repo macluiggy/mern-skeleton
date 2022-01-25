@@ -91,8 +91,10 @@ export default function EditProfile({ match }) {
       (data) => {
         const { error, _id: userId } = data;
         if (data && error) {
+          // console.log("an error occured");
           setValues({ ...values, error });
         } else {
+          // console.log("user updated");
           setValues({
             ...values,
             redirectToProfile: true,

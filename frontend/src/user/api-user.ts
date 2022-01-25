@@ -55,12 +55,14 @@ const update: TUpdate = async (params, credentials, user) => {
       body: JSON.stringify(user),
       headers: {
         Accept: "application/json",
-        ContentType: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${credentials.t}`,
         // sosoterocafuertemacluiggy: "sosoterocafuertemacluiggy",
       },
     });
-    return await response.json();
+    const data = await response.json();
+    // console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }
