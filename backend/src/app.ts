@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 // );
 // app.use(bodyParser.json());
 
-app.use(cors({ credentials: true, origin: "http://localhost:8080" || true })); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy, passing credentials: true, es para que el cliente pueda enviar datos al servidor cuando el modo de credenciales de la solicitud es 'include'
+app.use(cors({ credentials: true, origin: true })); //nunca te olvides de poner esto, si es que vas a usar las api de otro lado, osea de otro dominio o proxy, passing credentials: true, es para que el cliente pueda enviar datos al servidor cuando el modo de credenciales de la solicitud es 'include'
 
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(compress()); // compresses response bodies for all requests
