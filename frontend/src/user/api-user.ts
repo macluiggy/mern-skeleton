@@ -77,7 +77,7 @@ const remove: TRemove = async (params, credentials) => {
       method: "DELETE",
       headers: {
         Accept: "application/json",
-        ContentType: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${credentials.t}`,
         // sosoterocafuertemacluiggy: "sosoterocafuertemacluiggy",
       },
