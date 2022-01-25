@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export type TRead = (
   params: { userId: string },
   credentials: { t: string },
@@ -26,3 +28,7 @@ export type TUpdate = (
   updated: Date | undefined;
   error?: any;
 }>;
+
+export type THandleChange = (
+  name: string
+) => (event: ChangeEvent<HTMLTextAreaElement>) => void;
