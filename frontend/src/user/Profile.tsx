@@ -34,6 +34,7 @@ const useStyles = makeStyles(({ mixins: { gutters }, spacing, palette }) => ({
 
 export default function Profile({ match }) {
   const { root, title } = useStyles();
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -55,6 +56,7 @@ export default function Profile({ match }) {
         setRedirectToSignin(true);
       } else {
         setUser(data);
+        setLoading(false);
       }
     });
 
@@ -70,32 +72,36 @@ export default function Profile({ match }) {
       <Typography variant="h6" className={title}>
         Profile
       </Typography>
-      <List dense>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <Person />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={user.name} secondary={user.email} />{" "}
-          {isAuthenticated().user && isAuthenticated().user._id == user._id && (
-            <ListItemSecondaryAction>
-              <Link to={`/user/edit/${user._id}`}>
-                <IconButton aria-label="Edit" color="primary">
-                  <Edit />
-                </IconButton>
-              </Link>
-              <DeleteUser userId={user._id} />
-            </ListItemSecondaryAction>
-          )}
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemText
-            primary={`Joined: ${new Date(user.created || "").toDateString()}`}
-          />
-        </ListItem>
-      </List>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <List dense>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <Person />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={user.name} secondary={user.email} />{" "}
+            {isAuthenticated().user && isAuthenticated().user._id == user._id && (
+              <ListItemSecondaryAction>
+                <Link to={`/user/edit/${user._id}`}>
+                  <IconButton aria-label="Edit" color="primary">
+                    <Edit />
+                  </IconButton>
+                </Link>
+                <DeleteUser userId={user._id} />
+              </ListItemSecondaryAction>
+            )}
+          </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemText
+              primary={`Joined: ${new Date(user.created || "").toDateString()}`}
+            />
+          </ListItem>
+        </List>
+      )}
     </Paper>
   );
 }

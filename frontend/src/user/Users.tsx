@@ -27,6 +27,7 @@ const useStyles = makeStyles(({ mixins: { gutters }, spacing, palette }) => ({
 }));
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { root, title } = useStyles();
   useEffect(() => {
     const abortController = new AbortController();
@@ -36,6 +37,7 @@ export default function Users() {
       console.log(data);
 
       setUsers(data);
+      setLoading(false);
     });
 
     return function cleanup() {
@@ -48,25 +50,29 @@ export default function Users() {
         All Users
       </Typography>
       <List dense>
-        {users.map(({ _id, name }, i) => {
-          return (
-            <Link to={`/user/${_id}`} key={i}>
-              <ListItem button>
-                <ListItemAvatar>
-                  <Avatar>
-                    <Person />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={name} />
-                <ListItemSecondaryAction>
-                  <IconButton>
-                    <ArrowForward />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-            </Link>
-          );
-        })}
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          users.map(({ _id, name }, i) => {
+            return (
+              <Link to={`/user/${_id}`} key={i}>
+                <ListItem button>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <Person />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={name} />
+                  <ListItemSecondaryAction>
+                    <IconButton>
+                      <ArrowForward />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              </Link>
+            );
+          })
+        )}
       </List>
     </Paper>
   );
