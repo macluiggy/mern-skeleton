@@ -59,7 +59,9 @@ export default function EditProfile({ match }) {
     error: "",
     redirectToProfile: false,
   });
-  const jwt = auth.isAuthenticated();
+  const jwt: { token: string } = auth.isAuthenticated()
+    ? auth.returnUser()
+    : { token: "" };
 
   useEffect(() => {
     const abortController = new AbortController();

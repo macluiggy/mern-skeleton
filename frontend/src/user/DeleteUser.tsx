@@ -17,7 +17,9 @@ export default function DeleteUser({ userId }) {
   const [open, setOpen] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
-  const jwt = auth.isAuthenticated();
+  const jwt: { token: string } = auth.isAuthenticated()
+    ? auth.returnUser()
+    : { token: "invalid token" };
   const clickButton = () => {
     setOpen(true);
   };

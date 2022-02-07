@@ -42,13 +42,15 @@ export default function Profile({ match }) {
     _id: "",
   });
   const [redirectToSignin, setRedirectToSignin] = useState(false);
-  const jwt = isAuthenticated();
+  const jwt: { token: string } = isAuthenticated()
+    ? auth.returnUser()
+    : { token: "" };
 
   useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
     // console.log(jwt);
-    const t = typeof jwt === "boolean" ? jwt : jwt.token;
+    const t = jwt.token;
     read({ userId: match.params.userId }, { t }, signal).then((data) => {
       // console.log(data);
 
@@ -83,7 +85,7 @@ export default function Profile({ match }) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={user.name} secondary={user.email} />{" "}
-            {isAuthenticated().user && isAuthenticated().user._id == user._id && (
+            {auth.returnUser().user && auth.returnUser().user._id == user._id && (
               <ListItemSecondaryAction>
                 <Link to={`/user/edit/${user._id}`}>
                   <IconButton aria-label="Edit" color="primary">

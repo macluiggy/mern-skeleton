@@ -15,15 +15,21 @@ _id: "61e59ee3e46097a260807fc5" */
       sessionStorage.setItem("jwt", JSON.stringify(jwt)); // if we are in the browser, store the jwt in sessionStorage
     cb(); // call the callback that define actions to be executed after authentication
   },
+  returnUser() {
+    if (this.isAuthenticated()) {
+      return JSON.parse(sessionStorage.getItem("jwt"));
+    }
+  },
   isAuthenticated() {
     // let test = typeof window == "undefined" && !sessionStorage.getItem("jwt");
-    let jwt = sessionStorage.getItem("jwt");
+    // let jwt = sessionStorage.getItem("jwt");
 
     if (typeof window == "undefined") return false;
-    if (jwt) {
-      let parsedJwt = JSON.parse(jwt);
-      console.log(parsedJwt, "este es el token");
-      return parsedJwt;
+    if (sessionStorage.getItem("jwt")) {
+      // let parsedJwt = JSON.parse(jwt);
+      // console.log(parsedJwt, "este es el token");
+      // return parsedJwt;
+      return true;
     }
     // parse method is the opposite of stringify
     else return false;
