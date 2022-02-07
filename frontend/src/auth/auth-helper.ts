@@ -15,11 +15,6 @@ _id: "61e59ee3e46097a260807fc5" */
       sessionStorage.setItem("jwt", JSON.stringify(jwt)); // if we are in the browser, store the jwt in sessionStorage
     cb(); // call the callback that define actions to be executed after authentication
   },
-  returnUser() {
-    if (this.isAuthenticated()) {
-      return JSON.parse(sessionStorage.getItem("jwt"));
-    }
-  },
   isAuthenticated() {
     // let test = typeof window == "undefined" && !sessionStorage.getItem("jwt");
     // let jwt = sessionStorage.getItem("jwt");
@@ -33,6 +28,12 @@ _id: "61e59ee3e46097a260807fc5" */
     }
     // parse method is the opposite of stringify
     else return false;
+  },
+  returnUser(): any {
+    if (this.isAuthenticated()) {
+      return JSON.parse(sessionStorage.getItem("jwt") as string);
+    }
+    return { user: "not found" };
   },
   clearJWT(cb) {
     if (typeof window !== undefined) sessionStorage.removeItem("jwt"); // if we are in the browser, remove the jwt from sessionStorage
