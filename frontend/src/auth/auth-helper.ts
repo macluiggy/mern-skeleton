@@ -31,7 +31,7 @@ _id: "61e59ee3e46097a260807fc5" */
   },
   returnUser(): any {
     if (this.isAuthenticated()) {
-      return JSON.parse(sessionStorage.getItem("jwt") as string);
+      return JSON.parse(sessionStorage.getItem("jwt") as string); // you can also use ! as sessionStorage.getItem("jwt")! to indicate that the value is not null
     }
     return { user: "not found" };
   },
